@@ -84,9 +84,9 @@ class DBTodo {
     database = await initDB();
 
     String sql =
-        "UPDATE todo SET name=?,description=?,date=?,time=?, WHERE id=?";
+        "UPDATE todo SET name=?,description=?,date=?,time=? WHERE id=?";
 
-    List args = [name, description, date, time,id];
+    List args = [name, description, date, time, id];
 
     await database!.rawUpdate(sql, args);
   }

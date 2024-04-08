@@ -9,12 +9,16 @@ class TodoController extends GetxController {
   TimeOfDay timeOfDay = TimeOfDay.now();
   RxString date = "".obs;
   RxString time = "".obs;
+  RxString updateddate = "".obs;
+  RxString updatedtime = "".obs;
 
   @override
   void onInit() async {
     super.onInit();
     date.value = "${dateTime.day}/${dateTime.month}/${dateTime.year}";
     time.value = '${timeOfDay.hour} : ${timeOfDay.minute}';
+    updateddate.value = "${dateTime.day}/${dateTime.month}/${dateTime.year}";
+    updatedtime.value = '${timeOfDay.hour} : ${timeOfDay.minute}';
     List<Todo> data = await DBTodo.dbTodo.fetchTodoData();
     setTodoData(data);
   }
@@ -31,12 +35,12 @@ class TodoController extends GetxController {
   }
 
   void updatedDate(DateTime? selectDate) {
-    date.value = "${selectDate!.day}/${selectDate.month}/${selectDate.year}";
+    updateddate.value = "${selectDate!.day}/${selectDate.month}/${selectDate.year}";
     update();
   }
 
   void updatedTime(TimeOfDay? selectTime) {
-    time.value =
+    updatedtime.value =
         "${selectTime!.hour}:${selectTime.minute} ${selectTime.period.name}";
     update();
   }

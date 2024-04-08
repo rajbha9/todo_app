@@ -14,8 +14,6 @@ class HomaPage extends StatefulWidget {
 class _HomaPageState extends State<HomaPage> {
   int id = 0;
   String name = '';
-  String date = '';
-  String time = '';
   String description = '';
 
   String updatename = '';
@@ -157,7 +155,7 @@ class _HomaPageState extends State<HomaPage> {
                               children: [
                                 OutlinedButton(
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    Get.back();
                                   },
                                   child: const Text("Cancel"),
                                 ),
@@ -173,7 +171,7 @@ class _HomaPageState extends State<HomaPage> {
                                       (value) {
                                         nameController.clear();
                                         descriptionController.clear();
-                                        Navigator.of(context).pop();
+                                        Get.back();
                                       },
                                     );
                                     List<Todo> data =
@@ -342,7 +340,8 @@ class _HomaPageState extends State<HomaPage> {
                                                       Obx(
                                                         () => Text(
                                                           todoController
-                                                              .date.value,
+                                                              .updateddate
+                                                              .value,
                                                           style:
                                                               const TextStyle(
                                                                   fontSize: 16),
@@ -372,7 +371,8 @@ class _HomaPageState extends State<HomaPage> {
                                                       Obx(
                                                         () => Text(
                                                           todoController
-                                                              .time.value,
+                                                              .updatedtime
+                                                              .value,
                                                           style:
                                                               const TextStyle(
                                                                   fontSize: 16),
@@ -404,13 +404,17 @@ class _HomaPageState extends State<HomaPage> {
                                                               name,
                                                               description,
                                                               todoController
-                                                                  .date.value,
+                                                                  .updateddate
+                                                                  .value,
                                                               todoController
-                                                                  .time.value,
-                                                              e.id as int)
+                                                                  .updatedtime
+                                                                  .value,
+                                                              e.id)
                                                           .then(
-                                                        (value) async{
-                                                              await DBTodo.dbTodo.fetchSingleTodoData(id);
+                                                        (value) async {
+                                                          await DBTodo.dbTodo
+                                                              .fetchSingleTodoData(
+                                                                  id);
                                                           Get.back();
                                                         },
                                                       );
@@ -424,8 +428,9 @@ class _HomaPageState extends State<HomaPage> {
                                         ),
                                       );
                                     },
-                                  );
-                                  todoController.onInit();
+                                  ).then((value) {
+                                    todoController.onInit();
+                                  });
                                 },
                                 icon: const Icon(
                                   Icons.edit,
